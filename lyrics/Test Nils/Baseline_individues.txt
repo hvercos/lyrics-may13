@@ -1,0 +1,699 @@
+-------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\nste\Dropbox\cdi_apprenticeship\market_saturation_apprenticeship\Base
+> line Results Individus6 Juillet.txt
+  log type:  text
+ opened on:  15 May 2020, 18:16:04
+
+. 
+. *global path_nils2 "C:\Users\nste\Dropbox\cdi_apprenticeship\employment_survey"
+. *cd "${path_nils2}" 
+. *use ENSETE_2013_17Septembre2014_nonmissing.dta,clear
+. *log using "Compare ENSETE2013 to Individus6 Juillet.txt", replace text
+. 
+. gen apprenti = 1 if ap3==5
+(48,380 missing values generated)
+
+. replace apprenti = 0 if  ap3!=5 & ap3!=.
+(19,450 real changes made)
+
+. 
+. tab ap3
+
+    quel est votre statut dans l'emploi |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                           [1]  salarié |      3,412       16.74       16.74
+      [2]  employeur (hors agriculture) |        154        0.76       17.50
+[3]  travailleur bénévole pour une orga |        225        1.10       18.60
+                         [4]  stagiaire |        129        0.63       19.24
+                          [5]  apprenti |        927        4.55       23.79
+[6]  . travailleur à compte propre (hor |      6,297       30.90       54.69
+                     [7]  aide familial |      4,088       20.06       74.75
+[8]  agriculteur indépendant/employeur  |      4,984       24.46       99.21
+                  [9]  autre (précisez) |        161        0.79      100.00
+----------------------------------------+-----------------------------------
+                                  Total |     20,377      100.00
+
+. sum apprenti
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    apprenti |     20,377    .0454925    .2083867          0          1
+
+. 
+. * SHARE OF EMPLOYED YOUTHS IN APPRENTICESHIP IN THESE DISTRICTS
+. 
+. sum apprenti if m4a_impute>14 & m4a_impute<25 & milieu == 1 & ( strate ==3 | strate ==21 
+>  | strate ==13 | strate ==11 | strate ==15 | strate ==23 )
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    apprenti |        851    .2197415    .4143149          0          1
+
+. 
+. * lagune, include adzope *
+. 
+. sum apprenti if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==3
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    apprenti |        123    .1544715    .3628783          0          1
+
+. 
+. * bandama, include Bouake*
+. 
+. sum apprenti if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==21
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    apprenti |        118    .1440678    .3526559          0          1
+
+. 
+. * lacs, include Daoukro*
+. 
+. sum apprenti if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==13
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    apprenti |        124    .2822581    .4519242          0          1
+
+. 
+. * gho-djiboua, include Divo & Gagnoa !*
+. 
+. sum apprenti if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==11
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    apprenti |        151    .2516556    .4354085          0          1
+
+. 
+. * montagnes, include Man !*
+. 
+. sum apprenti if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==15
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    apprenti |        178    .2640449    .4420668          0          1
+
+. 
+. * woroba, include Mankono*
+. 
+. sum apprenti if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==23
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+    apprenti |        157    .1974522    .3993503          0          1
+
+. 
+. * SHARE OF ALL YOUTHS IN APPRENTICESHIP IN THESE DISTRICTS
+. 
+. * taking only ouths that answered the individual module, if se1a!=.
+. 
+. gen ap3_amongall = ap3 if m4a_impute>14 & m4a_impute<25
+(44,970 missing values generated)
+
+. replace ap3_amongall = 999999 if ap3_amongall ==. & m4a_impute>14 & m4a_impute<25
+(5,315 real changes made)
+
+. gen ap3_amongallrespondent = ap3 if m4a_impute>14 & m4a_impute<25 & se1a!=.
+(44,970 missing values generated)
+
+. replace ap3_amongallrespondent = 999999 if ap3_amongallrespondent ==. & se1a!=. & m4a_imp
+> ute>14 & m4a_impute<25
+(4,234 real changes made)
+
+. gen apprenti_amongallrespondent = apprenti if m4a_impute>14 & m4a_impute<25 & se1a!=.
+(44,970 missing values generated)
+
+. replace apprenti_amongallrespondent = 0 if apprenti_amongallrespondent ==. & se1a!=. & m4
+> a_impute>14 & m4a_impute<25
+(4,234 real changes made)
+
+. 
+. sum ap3_amongallrespondent ap3_amongall apprenti_amongallrespondent
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+ap3_amonga~t |      8,571    493993.7    499989.7          1     999999
+ap3_amongall |      9,652    550665.1    497449.1          1     999999
+apprenti_a~t |      8,571    .0682534     .252195          0          1
+
+. 
+. 
+. tab ap3_amongall if m4a_impute>14 & m4a_impute<25 & milieu == 1 & ( strate ==3 | strate =
+> =21  | strate ==13 | strate ==11 | strate ==15 | strate ==23 )
+
+ap3_amongal |
+          l |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        147        5.81        5.81
+          2 |          4        0.16        5.97
+          3 |          6        0.24        6.21
+          4 |         10        0.40        6.61
+          5 |        187        7.40       14.00
+          6 |        272       10.76       24.76
+          7 |        195        7.71       32.48
+          8 |         20        0.79       33.27
+          9 |         10        0.40       33.66
+     999999 |      1,677       66.34      100.00
+------------+-----------------------------------
+      Total |      2,528      100.00
+
+. tab ap3_amongallrespondent if m4a_impute>14 & m4a_impute<25 & milieu == 1 & ( strate ==3 
+> | strate ==21  | strate ==13 | strate ==11 | strate ==15 | strate ==23 )
+
+ap3_amongal |
+lrespondent |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          1 |        147        6.41        6.41
+          2 |          4        0.17        6.58
+          3 |          6        0.26        6.84
+          4 |         10        0.44        7.28
+          5 |        187        8.15       15.43
+          6 |        272       11.86       27.29
+          7 |        195        8.50       35.79
+          8 |         20        0.87       36.66
+          9 |         10        0.44       37.10
+     999999 |      1,443       62.90      100.00
+------------+-----------------------------------
+      Total |      2,294      100.00
+
+. sum apprenti_amongallrespondent if m4a_impute>14 & m4a_impute<25 & milieu == 1 & ( strate
+>  ==3 | strate ==21  | strate ==13 | strate ==11 | strate ==15 | strate ==23 )
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+apprenti_a~t |      2,294     .081517    .2736871          0          1
+
+. 
+. * lagune, include adzope *
+. 
+. sum apprenti_amongallrespondent if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate =
+> =3
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+apprenti_a~t |        394    .0482234    .2145102          0          1
+
+. 
+. 
+.  * bandama, include Bouake
+.  
+. sum apprenti_amongallrespondent  if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate 
+> ==21
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+apprenti_a~t |        329    .0516717    .2217006          0          1
+
+. 
+. * lacs, include Daoukro*
+. 
+. sum apprenti_amongallrespondent  if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate 
+> ==13
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+apprenti_a~t |        435    .0804598    .2723169          0          1
+
+. 
+. * gho-djiboua, include Divo & Gagnoa !*
+. 
+. sum apprenti_amongallrespondent  if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate 
+> ==11
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+apprenti_a~t |        400        .095    .2935821          0          1
+
+. 
+. * montagnes, include Man !*
+. 
+. sum apprenti_amongallrespondent  if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate 
+> ==15
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+apprenti_a~t |        358    .1312849    .3381843          0          1
+
+. 
+. * woroba, include Mankono*
+. 
+. sum apprenti_amongallrespondent  if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate 
+> ==23
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+apprenti_a~t |        378    .0820106    .2747445          0          1
+
+. 
+. 
+. **** INCLUDING WEIGHTS
+. * SHARE OF EMPLOYED YOUTHS IN APPRENTICESHIP IN THESE DISTRICTS
+. sum apprenti [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 & ( strate ==3 | st
+> rate ==21  | strate ==13 | strate ==11 | strate ==15 | strate ==23 ) 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+    apprenti |     851  306499.958    .2071446   .4054984          0          1
+
+. sum apprenti [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==3 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+    apprenti |     123  81116.3582    .1563224   .3646461          0          1
+
+. sum apprenti [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==21 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+    apprenti |     118  65236.2764    .1493474   .3579506          0          1
+
+. sum apprenti [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==13 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+    apprenti |     124  47361.4051    .2448069    .431717          0          1
+
+. sum apprenti [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==11 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+    apprenti |     151  55263.9175    .2635257    .442011          0          1
+
+. sum apprenti [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==15  
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+    apprenti |     178  44010.5498    .2773543   .4489557          0          1
+
+. sum apprenti [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==23 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+    apprenti |     157  13511.4508    .1999983   .4012787          0          1
+
+. 
+. * SHARE OF ALL YOUTHS IN APPRENTICESHIP IN THESE DISTRICTS
+. sum apprenti_amongallrespondent [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 
+> & ( strate ==3 | strate ==21  | strate ==13 | strate ==11 | strate ==15 | strate ==23 )
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+apprenti_a~t |   2,294  870055.307    .0729722   .2601475          0          1
+
+. sum apprenti_amongallrespondent [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1 
+> & strate ==3  
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+apprenti_a~t |     394  254743.594    .0497767   .2177599          0          1
+
+. sum apprenti_amongallrespondent  [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1
+>  & strate ==21 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+apprenti_a~t |     329  186447.656    .0522553   .2228803          0          1
+
+. sum apprenti_amongallrespondent  [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1
+>  & strate ==13 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+apprenti_a~t |     435  154119.357      .07523   .2640658          0          1
+
+. sum apprenti_amongallrespondent  [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1
+>  & strate ==11 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+apprenti_a~t |     400  156519.519    .0930457   .2908602          0          1
+
+. sum apprenti_amongallrespondent  [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1
+>  & strate ==15 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+apprenti_a~t |     358  86202.5958    .1416026   .3491301          0          1
+
+. sum apprenti_amongallrespondent  [aw=pond] if m4a_impute>14 & m4a_impute<25 & milieu == 1
+>  & strate ==23 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+apprenti_a~t |     378  32022.5851    .0843863   .2783347          0          1
+
+. 
+. * DUREE MOYENNE AN APPRENTISSAGE
+. 
+. * date of interview
+. des s0qdjj s0qdmm s0qdaa
+
+              storage   display    value
+variable name   type    format     label      variable label
+-------------------------------------------------------------------------------------------
+s0qdjj          double  %10.0g                jour de l'enquete
+s0qdmm          double  %10.0g                mois de l'enquete
+s0qdaa          double  %18.0g     s0qdaa     année de l'enquete
+
+. sum ap5a1  ap5a1mm  ap5a1aa if apprenti == 1
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+       ap5a1 |        927    145492.1    297217.2      11960     999999
+     ap5a1mm |        927    14.34304    29.70697          1         99
+     ap5a1aa |        927    2061.666    640.9956       1960       9999
+
+. 
+. * date of start of position
+. replace ap5a1aa=. if ( ap5a1aa==9999 | ap5a1aa==9998 ) & apprenti == 1
+(6 real changes made, 6 to missing)
+
+. replace ap5a1mm=6 if ( ap5a1mm==99 | ap5a1mm==98 ) & apprenti == 1
+(101 real changes made)
+
+. sum  s0qdaa ap5a1aa  if  apprenti == 1
+
+    Variable |        Obs        Mean    Std. Dev.       Min        Max
+-------------+---------------------------------------------------------
+      s0qdaa |        927        2014           0       2014       2014
+     ap5a1aa |        921    2009.958    4.207311       1960       2014
+
+. 
+. capture drop duree_apprentissage
+
+. gen duree_apprentissage =s0qdaa -  ap5a1aa if apprenti == 1
+(48,386 missing values generated)
+
+. sum duree_apprentissage if apprenti == 1, d
+
+                     duree_apprentissage
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            1              0       Obs                 921
+25%            1              0       Sum of Wgt.         921
+
+50%            3                      Mean           4.042345
+                        Largest       Std. Dev.      4.207311
+75%            5             23
+90%           10             25       Variance       17.70147
+95%           12             26       Skewness       3.202177
+99%           18             54       Kurtosis       26.71971
+
+.  
+.  * AVERAGE DURATION IN APPRENTICESHIP IN THESE DISTRICTS
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & ( strate ==3 | strate ==21  | strate ==13 | strate ==11 | strate ==15 | strate 
+> ==23 ) 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+duree_appr~e |     186  63393.6937    3.963099   3.434437          0         18
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==3 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+duree_appr~e |      19  12680.3067    4.100736   4.101823          0         13
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==21 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+duree_appr~e |      17  9742.86975    4.432247   4.524945          0         14
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==13 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+duree_appr~e |      35  11594.3979    4.265605   3.139137          0         14
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==11 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+duree_appr~e |      38   14563.461    3.230332   2.247486          0          8
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==15  
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+duree_appr~e |      46  12110.3917    3.875474   2.834048          0         13
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==23 
+
+    Variable |     Obs      Weight        Mean   Std. Dev.       Min        Max
+-------------+-----------------------------------------------------------------
+duree_appr~e |      31  2702.26671    4.669639   4.923218          0         18
+
+.  
+.  sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mil
+> ieu == 1 & ( strate ==3 | strate ==21  | strate ==13 | strate ==11 | strate ==15 | strate
+>  ==23 ) , d
+
+                     duree_apprentissage
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            1              0       Obs                 186
+25%            1              0       Sum of Wgt.  63,393.694
+
+50%            3                      Mean           3.963099
+                        Largest       Std. Dev.      3.434437
+75%            6             14
+90%            8             14       Variance       11.79536
+95%           11             18       Skewness        1.23569
+99%           14             18       Kurtosis       4.374545
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==3 , d
+
+                     duree_apprentissage
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            0              0       Obs                  19
+25%            1              0       Sum of Wgt.  12,680.307
+
+50%            4                      Mean           4.100736
+                        Largest       Std. Dev.      4.101823
+75%            7              7
+90%           11              7       Variance       16.82495
+95%           13             11       Skewness       .8413293
+99%           13             13       Kurtosis       2.679416
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==21 , d
+
+                     duree_apprentissage
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            1              1       Obs                  17
+25%            1              1       Sum of Wgt.  9,742.8698
+
+50%            3                      Mean           4.432247
+                        Largest       Std. Dev.      4.524945
+75%            6             10
+90%           12             11       Variance       20.47513
+95%           14             12       Skewness       1.178387
+99%           14             14       Kurtosis       2.924805
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==13 , d
+
+                     duree_apprentissage
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            1              1       Obs                  35
+25%            2              1       Sum of Wgt.  11,594.398
+
+50%            4                      Mean           4.265605
+                        Largest       Std. Dev.      3.139137
+75%            7              8
+90%            8             10       Variance        9.85418
+95%           10             10       Skewness       .7760705
+99%           14             14       Kurtosis        3.35972
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==11 , d
+
+                     duree_apprentissage
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            1              0
+10%            1              0       Obs                  38
+25%            1              1       Sum of Wgt.  14,563.461
+
+50%            3                      Mean           3.230332
+                        Largest       Std. Dev.      2.247486
+75%            5              7
+90%            6              7       Variance       5.051192
+95%            8              8       Skewness       .4906487
+99%            8              8       Kurtosis       2.214228
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==15 , d
+
+                     duree_apprentissage
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            1              0       Obs                  46
+25%            1              1       Sum of Wgt.  12,110.392
+
+50%            4                      Mean           3.875474
+                        Largest       Std. Dev.      2.834048
+75%            5              6
+90%            6              9       Variance       8.031831
+95%           10             10       Skewness        1.11184
+99%           13             13       Kurtosis       4.776711
+
+. sum duree_apprentissage [aw=pond] if apprenti == 1 & m4a_impute>14 & m4a_impute<25 & mili
+> eu == 1 & strate ==23 , d
+
+                     duree_apprentissage
+-------------------------------------------------------------
+      Percentiles      Smallest
+ 1%            0              0
+ 5%            0              0
+10%            1              0       Obs                  31
+25%            1              1       Sum of Wgt.  2,702.2667
+
+50%            3                      Mean           4.669639
+                        Largest       Std. Dev.      4.923218
+75%            5             10
+90%           10             11       Variance       24.23808
+95%           18             18       Skewness       1.497857
+99%           18             18       Kurtosis       4.564384
+
+.  
+. /*Completeness Analysis*/ 
+. *lagune, include adzope *
+. tab ap3 if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==3
+
+    quel est votre statut dans l'emploi |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                           [1]  salarié |         29       23.58       23.58
+      [2]  employeur (hors agriculture) |          1        0.81       24.39
+                          [5]  apprenti |         19       15.45       39.84
+[6]  . travailleur à compte propre (hor |         51       41.46       81.30
+                     [7]  aide familial |         19       15.45       96.75
+[8]  agriculteur indépendant/employeur  |          4        3.25      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        123      100.00
+
+. 
+. 
+. * bandama, include Bouake*
+. tab ap3 if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==21
+
+    quel est votre statut dans l'emploi |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                           [1]  salarié |         33       27.97       27.97
+[3]  travailleur bénévole pour une orga |          1        0.85       28.81
+                         [4]  stagiaire |          2        1.69       30.51
+                          [5]  apprenti |         17       14.41       44.92
+[6]  . travailleur à compte propre (hor |         37       31.36       76.27
+                     [7]  aide familial |         25       21.19       97.46
+[8]  agriculteur indépendant/employeur  |          2        1.69       99.15
+                  [9]  autre (précisez) |          1        0.85      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        118      100.00
+
+. 
+. 
+. *lacs, include Daoukro*
+. tab ap3 if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==13
+
+    quel est votre statut dans l'emploi |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                           [1]  salarié |         29       23.39       23.39
+                         [4]  stagiaire |          1        0.81       24.19
+                          [5]  apprenti |         35       28.23       52.42
+[6]  . travailleur à compte propre (hor |         35       28.23       80.65
+                     [7]  aide familial |         23       18.55       99.19
+[8]  agriculteur indépendant/employeur  |          1        0.81      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        124      100.00
+
+. 
+. 
+. * gho-djiboua, include Divo & Gagnoa !*
+. tab ap3 if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==11
+
+    quel est votre statut dans l'emploi |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                           [1]  salarié |         20       13.25       13.25
+      [2]  employeur (hors agriculture) |          1        0.66       13.91
+[3]  travailleur bénévole pour une orga |          2        1.32       15.23
+                         [4]  stagiaire |          3        1.99       17.22
+                          [5]  apprenti |         38       25.17       42.38
+[6]  . travailleur à compte propre (hor |         45       29.80       72.19
+                     [7]  aide familial |         38       25.17       97.35
+[8]  agriculteur indépendant/employeur  |          3        1.99       99.34
+                  [9]  autre (précisez) |          1        0.66      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        151      100.00
+
+. 
+. 
+. * montagnes, include Man !*
+. tab ap3 if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==15
+
+    quel est votre statut dans l'emploi |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                           [1]  salarié |         17        9.55        9.55
+      [2]  employeur (hors agriculture) |          1        0.56       10.11
+[3]  travailleur bénévole pour une orga |          2        1.12       11.24
+                         [4]  stagiaire |          1        0.56       11.80
+                          [5]  apprenti |         47       26.40       38.20
+[6]  . travailleur à compte propre (hor |         67       37.64       75.84
+                     [7]  aide familial |         32       17.98       93.82
+[8]  agriculteur indépendant/employeur  |          4        2.25       96.07
+                  [9]  autre (précisez) |          7        3.93      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        178      100.00
+
+. 
+. 
+. * woroba, include Mankono*
+. tab ap3 if m4a_impute>14 & m4a_impute<25 & milieu == 1 & strate ==23
+
+    quel est votre statut dans l'emploi |      Freq.     Percent        Cum.
+----------------------------------------+-----------------------------------
+                           [1]  salarié |         19       12.10       12.10
+      [2]  employeur (hors agriculture) |          1        0.64       12.74
+[3]  travailleur bénévole pour une orga |          1        0.64       13.38
+                         [4]  stagiaire |          3        1.91       15.29
+                          [5]  apprenti |         31       19.75       35.03
+[6]  . travailleur à compte propre (hor |         37       23.57       58.60
+                     [7]  aide familial |         58       36.94       95.54
+[8]  agriculteur indépendant/employeur  |          6        3.82       99.36
+                  [9]  autre (précisez) |          1        0.64      100.00
+----------------------------------------+-----------------------------------
+                                  Total |        157      100.00
+
+. log close
+      name:  <unnamed>
+       log:  C:\Users\nste\Dropbox\cdi_apprenticeship\market_saturation_apprenticeship\Base
+> line Results Individus6 Juillet.txt
+  log type:  text
+ closed on:  15 May 2020, 18:16:06
+-------------------------------------------------------------------------------------------
