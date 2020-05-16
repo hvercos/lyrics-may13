@@ -1,19 +1,14 @@
 -------------------------------------------------------------------------------------------
       name:  <unnamed>
-       log:  C:\Users\nste\Dropbox\cdi_apprenticeship\market_saturation_apprenticeship\Base
-> line Results Individus6 Juillet.txt
+       log:  C:\Users\nste\Dropbox\cdi_apprenticeship\employment_survey\Compare ENSETE2013 
+> to Individus6 Juillet.txt
   log type:  text
- opened on:  16 May 2020, 15:33:35
+ opened on:  16 May 2020, 15:34:41
 
 . 
-. *global path_nils2 "C:\Users\nste\Dropbox\cdi_apprenticeship\employment_survey"
-. *cd "${path_nils2}" 
-. *use ENSETE_2013_17Septembre2014_nonmissing.dta,clear
-. *log using "Compare ENSETE2013 to Individus6 Juillet.txt", replace text
-. 
-. * THIS IS THE BASELINE FROM THE APPRENTICESHIP MARKET SATURATION ANALYSIS
+. * THIS IS THE DATASET FROM THE WB CDI JOBS REPORT
 . gen apprenti = 1 if ap3==5
-(48,380 missing values generated)
+(44,432 missing values generated)
 
 . replace apprenti = 0 if  ap3!=5 & ap3!=.
 (19,450 real changes made)
@@ -111,20 +106,20 @@
 . * taking only ouths that answered the individual module, if se1a!=.
 . 
 . gen ap3_amongall = ap3 if m4a_impute>14 & m4a_impute<25
-(44,970 missing values generated)
+(41,022 missing values generated)
 
 . replace ap3_amongall = 999999 if ap3_amongall ==. & m4a_impute>14 & m4a_impute<25
-(5,315 real changes made)
+(4,234 real changes made)
 
 . gen ap3_amongallrespondent = ap3 if m4a_impute>14 & m4a_impute<25 & se1a!=.
-(44,970 missing values generated)
+(41,022 missing values generated)
 
 . replace ap3_amongallrespondent = 999999 if ap3_amongallrespondent ==. & se1a!=. & m4a_imp
 > ute>14 & m4a_impute<25
 (4,234 real changes made)
 
 . gen apprenti_amongallrespondent = apprenti if m4a_impute>14 & m4a_impute<25 & se1a!=.
-(44,970 missing values generated)
+(41,022 missing values generated)
 
 . replace apprenti_amongallrespondent = 0 if apprenti_amongallrespondent ==. & se1a!=. & m4
 > a_impute>14 & m4a_impute<25
@@ -136,7 +131,7 @@
     Variable |        Obs        Mean    Std. Dev.       Min        Max
 -------------+---------------------------------------------------------
 ap3_amonga~t |      8,571    493993.7    499989.7          1     999999
-ap3_amongall |      9,652    550665.1    497449.1          1     999999
+ap3_amongall |      8,571    493993.7    499989.7          1     999999
 apprenti_a~t |      8,571    .0682534     .252195          0          1
 
 . 
@@ -147,18 +142,18 @@ apprenti_a~t |      8,571    .0682534     .252195          0          1
 ap3_amongal |
           l |      Freq.     Percent        Cum.
 ------------+-----------------------------------
-          1 |        147        5.81        5.81
-          2 |          4        0.16        5.97
-          3 |          6        0.24        6.21
-          4 |         10        0.40        6.61
-          5 |        187        7.40       14.00
-          6 |        272       10.76       24.76
-          7 |        195        7.71       32.48
-          8 |         20        0.79       33.27
-          9 |         10        0.40       33.66
-     999999 |      1,677       66.34      100.00
+          1 |        147        6.41        6.41
+          2 |          4        0.17        6.58
+          3 |          6        0.26        6.84
+          4 |         10        0.44        7.28
+          5 |        187        8.15       15.43
+          6 |        272       11.86       27.29
+          7 |        195        8.50       35.79
+          8 |         20        0.87       36.66
+          9 |         10        0.44       37.10
+     999999 |      1,443       62.90      100.00
 ------------+-----------------------------------
-      Total |      2,528      100.00
+      Total |      2,294      100.00
 
 . tab ap3_amongallrespondent if m4a_impute>14 & m4a_impute<25 & milieu == 1 & ( strate ==3 
 > | strate ==21  | strate ==13 | strate ==11 | strate ==15 | strate ==23 )
@@ -385,7 +380,7 @@ s0qdaa          double  %18.0g     s0qdaa     année de l'enquete
 . capture drop duree_apprentissage
 
 . gen duree_apprentissage =s0qdaa -  ap5a1aa if apprenti == 1
-(48,386 missing values generated)
+(44,438 missing values generated)
 
 . sum duree_apprentissage if apprenti == 1, d
 
@@ -693,8 +688,8 @@ duree_appr~e |      31  2702.26671    4.669639   4.923218          0         18
 
 . log close
       name:  <unnamed>
-       log:  C:\Users\nste\Dropbox\cdi_apprenticeship\market_saturation_apprenticeship\Base
-> line Results Individus6 Juillet.txt
+       log:  C:\Users\nste\Dropbox\cdi_apprenticeship\employment_survey\Compare ENSETE2013 
+> to Individus6 Juillet.txt
   log type:  text
- closed on:  16 May 2020, 15:33:38
+ closed on:  16 May 2020, 15:34:43
 -------------------------------------------------------------------------------------------
